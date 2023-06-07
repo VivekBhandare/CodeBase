@@ -1,6 +1,25 @@
 /*
-* @Author: Vivek Bhandare
-* Student @ AstroMediComp
+*   @Author: Vivek Bhandare
+*   Student @ AstroMediComp
+*    
+*   This code is designed for converting a number from one number system to another.
+*    
+*   01. Decimal to Binary              Done
+*   02. Decimal to Octal               Done
+*   03. Decimal to Hexadecimal         Done
+* 
+*   04. Binary to Decimal              Done
+*   05. Octal to Decimal               Done
+*   06. Hexadecimal to Decimal         Done
+*   
+*   07. Binary to Octal                Not done
+*   08. Binary to Hexadecimal          Not done
+*    
+*   09. Octal to Binary                Not done
+*   10. Octal to Hexadecimal           Not done
+*   
+*   11. Hexadecimal to Binary          Not done
+*   12. Hexadecimal to Octal           Not done
 */
 
 
@@ -14,7 +33,7 @@
 #define DECIMAL_BASE 10
 
 //this defines whether the number should be of 8 or 16 or 32 bits
-#define HOW_MUCH_BITS 8
+#define HOW_MUCH_BITS 32
 
 //'A' to 'F' ASCII values => 65 to 70
 #define UPPER_CASE_A 65
@@ -31,31 +50,37 @@ int main(void)
     //function declarations
     int* decimal_to_any(int, int);
     int any_to_decimal(char*, int, int);
+    int print_array_elements(int*, int, int);
     int power(int, int);
 
     //variable declarations
     char conversion_type;
 
-    int decimal_number;
     int decimal_to_what;
+    int decimal_number;
     int* answer;
     char print_leading_zero = 'N';
 
-    char bin_or_oct_or_hex_number[HOW_MUCH_BITS];
     int what_to_decimal;
+    char bin_or_oct_or_hex_number[HOW_MUCH_BITS];
     int answer_in_decimal;
+
+    int binary_to_what;
+    char binary_number[HOW_MUCH_BITS];
+
 
     //code
     printf("Which number system conversion you want to do ?\n\n");
     printf("Enter 'A' or 'a' For Decimal to Binary/Octal/Hexadecimal\n");
     printf("Enter 'B' or 'b' For Binary/Octal/Hexadecimal to Decimal\n");
+    printf("Enter 'C' or 'c' For Binary to Octal/Hexadecimal\n");
     scanf("%c", &conversion_type);
 
 
     //main switch-case for what type of conversion we want to do
     switch (conversion_type)
     {
-        //case 'A' or 'a' => Decimal to Binary/Octal/Hexadecimal
+    //case 'A' or 'a' => Decimal to Binary/Octal/Hexadecimal
     case 'A':
     case 'a':
         printf("Enter 1 For Decimal to Binary\n");
@@ -93,58 +118,12 @@ int main(void)
 
         } //ending curly brace of switch(decimal_to_what)
 
-        //if-block is for printing binary or octal number.
-        if ((decimal_to_what == 1) || (decimal_to_what == 2))
-        {
-            for (int bit = 0; bit < HOW_MUCH_BITS; bit++)
-            {
-                //below continue is to skip the printing of leading zero if any.
-                if (answer[bit] == 0 && (print_leading_zero == 'N'))
-                {
-                    continue;
-                }
-                //if first non-zero value arrives in an array, then only the control will go to the else-block
-                //thus assigning 'Y' to print_leading_zero so that above if condition will fail from the next iterations of for loop
-                else
-                {
-                    printf("%d", answer[bit]);
-                    print_leading_zero = 'Y';
-                }
-            }
-            printf("\n");
-        }
-        //else-if block is for printing hexadecimal number
-        else if (decimal_to_what == 3)
-        {
-            for (int bit = 0; bit < HOW_MUCH_BITS; bit++)
-            {
-                //below continue is to skip the printing of leading zero if any.
-                if (answer[bit] == 0 && (print_leading_zero == 'N'))
-                {
-                    continue;
-                }
-                //if first non-zero value arrives in an array, then only the control will go to the else-block
-                //thus assigning 'Y' to print_leading_zero so that above if condition will fail from the next iterations of for loop
-                else
-                {
-                    if ((answer[bit] >= 10) && (answer[bit] <= 15))
-                    {
-                        //type casting integer value of 10 by adding it 55, so that it gives 65 which when casted to char gives A
-                        //repeating this process from 10 to 15 so that we can print 'A' to 'F' values
-                        printf("%c", (char)(answer[bit] + 55));
-                    }
-                    else
-                    {
-                        printf("%d", answer[bit]);
-                    }
-                    print_leading_zero = 'Y';
-                }
-            }
-            printf("\n");
-        }
+        //below function will print converted number from decimal
+        print_array_elements(answer, HOW_MUCH_BITS, decimal_to_what);
+        
         break; //break for case 'A' or case 'a'
 
-        //case 'B' or 'b' => Binary/Octal/Hexadecimal to Decimal
+    //case 'B' or 'b' => Binary/Octal/Hexadecimal to Decimal
     case 'B':
     case 'b':
         printf("Enter 1 For Binary to Decimal\n");
@@ -172,7 +151,7 @@ int main(void)
             printf("Enter the Hexadecimal Number for converting it into Decimal : ");
             scanf("%s", &bin_or_oct_or_hex_number);
             answer_in_decimal = any_to_decimal(bin_or_oct_or_hex_number, HEXADEC_BASE, what_to_decimal);
-            printf("hexadecimal Number : %s Is Converted To Decimal Number : %d", bin_or_oct_or_hex_number, answer_in_decimal);
+            printf("Hexadecimal Number : %s Is Converted To Decimal Number : %d", bin_or_oct_or_hex_number, answer_in_decimal);
             break;
 
         default: //'default' for case(what_to_decimal)
@@ -181,6 +160,46 @@ int main(void)
         } //ending curly brace of switch(what_to_decimal)
 
         break; //break for case 'B' or case 'b'
+
+    //case 'C' or 'c' => Binary to Octal/Hexadecimal
+    case 'C':
+    case 'c':
+        printf("Enter 1 For Binary to Octal\n");
+        printf("Enter 2 For Binary to Hexadecimal\n");
+        scanf("%d", &binary_to_what);
+
+        switch (binary_to_what)
+        {
+        case 1:
+            printf("Enter the Binary Number for converting it into Octal : ");
+            scanf("%s", &binary_number);
+            //first converting the given binary number to decimal
+            answer_in_decimal = any_to_decimal(binary_number, BINARY_BASE, 1);
+            printf("First converted the Binary Number : %s To Decimal Number %d\n", binary_number, answer_in_decimal);
+            //then converting that decimal number to octal
+            answer = decimal_to_any(answer_in_decimal, OCTAL_BASE);
+            printf("Then converted the Decimal Number : %d To Octal Number : ", answer_in_decimal);
+            print_array_elements(answer, HOW_MUCH_BITS, binary_to_what);
+            break;
+
+        case 2:
+            printf("Enter the Binary Number for converting it into Hexadecimal : ");
+            scanf("%s", &binary_number);
+            //first converting the given binary number to decimal
+            answer_in_decimal = any_to_decimal(binary_number, BINARY_BASE, 1);
+            printf("First converted the Binary Number : %s To Decimal Number %d\n", binary_number, answer_in_decimal);
+            //then converting that decimal number to hexadecimal
+            answer = decimal_to_any(answer_in_decimal, HEXADEC_BASE);
+            printf("Then converted the Decimal Number : %d To Hexadecimal Number : ", answer_in_decimal);
+            print_array_elements(answer, HOW_MUCH_BITS, 3);
+            break;
+
+        default: //'default' for case(binary_to_what)
+            printf("Invalid Option Entered For Conversion Of Binary to Octal/Hexadecimal !!! Please try again !!!\n");
+            break;
+        }
+
+        break; //break for case 'C' or case 'c'
 
     default:
         printf("Invalid Option Entered For Conversion Type !!! Please try again !!!\n");
@@ -226,11 +245,11 @@ int any_to_decimal(char* in_var_num, int in_base_digits, int what_to_dec)
     int decimal_num_to_return = 0;
     int index = 0;
 
-    //if block for converting binary/octal number to decimal number
-    if ((what_to_dec == 1 || what_to_dec == 2))
+    
+    for (int bit = HOW_MUCH_BITS - 1; bit >= 0; bit--)
     {
-        printf("Inside if-block for converting binary/octal number to decimal number\n");
-        for (int bit = HOW_MUCH_BITS - 1; bit >= 0; bit--)
+        //if block for converting binary/octal number to decimal number
+        if ((what_to_dec == 1 || what_to_dec == 2))
         {
             if ((int)in_var_num[bit] >= DIGIT_0 && (int)in_var_num[bit] <= DIGIT_9)
             {
@@ -238,14 +257,10 @@ int any_to_decimal(char* in_var_num, int in_base_digits, int what_to_dec)
                 index++;
             }
         }
-    }
-    //else-if block for converting hexadecimal number to decimal number
-    else if (what_to_dec == 3)
-    {
-        printf("Inside else-block for converting hexadecimal number to decimal number\n");
-        for (int bit = HOW_MUCH_BITS - 1; bit >= 0; bit--)
+        //else if block for converting hexadecimal number to decimal number
+        else if (what_to_dec == 3)
         {
-            //assuming that the Hexadecimal Number entered is consist of 0 to 9 or A to F.
+            //assuming that the Hexadecimal Number entered is consist of 0 to 9 or A to F
 
             //if the entered character is a digit between 0 to 9
             if (((int)in_var_num[bit] >= DIGIT_0) && ((int)in_var_num[bit] <= DIGIT_9))
@@ -259,12 +274,68 @@ int any_to_decimal(char* in_var_num, int in_base_digits, int what_to_dec)
                 decimal_num_to_return = decimal_num_to_return + (((int)in_var_num[bit] - (UPPER_CASE_A - 10)) * power(in_base_digits, index));
                 index++;
             }
+        }
 
-        } //ending curly brace of for loop which is inside outer else-if block (hexadecimal number to decimal number)
-    }
+    } //ending curly brace of for loop hexadecimal number to decimal number
 
     //return the converted decimal number
     return(decimal_num_to_return);
+}
+
+
+int print_array_elements(int* array_name, int array_size, int what_to_print)
+{
+    //variable declarations
+    char print_leading_zero = 'N';
+
+    //code
+    for (int bit = 0; bit < array_size; bit++)
+    {
+        //if-block is for printing binary or octal number
+        if ((what_to_print == 1) || (what_to_print == 2))
+        {
+            //below continue is to skip the printing of leading zero if any.
+            if (array_name[bit] == 0 && (print_leading_zero == 'N'))
+            {
+                continue;
+            }
+            //if first non-zero value arrives in an array, then only the control will go to the else-block
+            //thus assigning 'Y' to print_leading_zero so that above if condition will fail from the next iterations of for loop
+            else
+            {
+                printf("%d", array_name[bit]);
+                print_leading_zero = 'Y';
+            }
+        }
+        //else-if block is for printing hexadecimal number
+        else if (what_to_print == 3)
+        {
+            //below continue is to skip the printing of leading zero if any.
+            if (array_name[bit] == 0 && (print_leading_zero == 'N'))
+            {
+                continue;
+            }
+            //if first non-zero value arrives in an array, then only the control will go to the else-block
+            //thus assigning 'Y' to print_leading_zero so that above if condition will fail from the next iterations of for loop
+            else
+            {
+                if ((array_name[bit] >= 10) && (array_name[bit] <= 15))
+                {
+                    //type casting integer value of 10 by adding it 55, so that it gives 65 which when casted to char gives A
+                    //repeating this process from 10 to 15 so that we can print 'A' to 'F' values
+                    printf("%c", (char)(array_name[bit] + 55));
+                }
+                else
+                {
+                    printf("%d", array_name[bit]);
+                }
+                print_leading_zero = 'Y';
+            }
+        }
+    }
+    printf("\n");
+
+    return(0);
 }
 
 
