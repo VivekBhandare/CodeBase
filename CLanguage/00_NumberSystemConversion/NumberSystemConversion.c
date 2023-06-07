@@ -2,24 +2,24 @@
 *   @Author: Vivek Bhandare
 *   Student @ AstroMediComp
 *    
-*   This code is designed for converting a number from one number system to another.
+*   Converting a number from one number system to another
 *    
-*   01. Decimal to Binary              Done
-*   02. Decimal to Octal               Done
-*   03. Decimal to Hexadecimal         Done
+*       01. Decimal to Binary
+*       02. Decimal to Octal
+*       03. Decimal to Hexadecimal
 * 
-*   04. Binary to Decimal              Done
-*   05. Octal to Decimal               Done
-*   06. Hexadecimal to Decimal         Done
+*       04. Binary to Decimal
+*       05. Octal to Decimal
+*       06. Hexadecimal to Decimal
 *   
-*   07. Binary to Octal                Not done
-*   08. Binary to Hexadecimal          Not done
+*       07. Binary to Octal
+*       08. Binary to Hexadecimal
 *    
-*   09. Octal to Binary                Not done
-*   10. Octal to Hexadecimal           Not done
+*       09. Octal to Binary
+*       10. Octal to Hexadecimal
 *   
-*   11. Hexadecimal to Binary          Not done
-*   12. Hexadecimal to Octal           Not done
+*       11. Hexadecimal to Binary
+*       12. Hexadecimal to Octal
 */
 
 
@@ -44,7 +44,6 @@
 #define DIGIT_9 57
 
 
-
 int main(void)
 {
     //function declarations
@@ -59,7 +58,6 @@ int main(void)
     int decimal_to_what;
     int decimal_number;
     int* answer;
-    char print_leading_zero = 'N';
 
     int what_to_decimal;
     char bin_or_oct_or_hex_number[HOW_MUCH_BITS];
@@ -68,12 +66,20 @@ int main(void)
     int binary_to_what;
     char binary_number[HOW_MUCH_BITS];
 
+    int octal_to_what;
+    char octal_number[HOW_MUCH_BITS];
+
+    int hexadecimal_to_what;
+    char hexadecimal_number[HOW_MUCH_BITS];
+
 
     //code
     printf("Which number system conversion you want to do ?\n\n");
     printf("Enter 'A' or 'a' For Decimal to Binary/Octal/Hexadecimal\n");
     printf("Enter 'B' or 'b' For Binary/Octal/Hexadecimal to Decimal\n");
     printf("Enter 'C' or 'c' For Binary to Octal/Hexadecimal\n");
+    printf("Enter 'D' or 'd' For Octal to Binary/Hexadecimal\n");
+    printf("Enter 'E' or 'e' For Hexadecimal to Binary/Octal\n");
     scanf("%c", &conversion_type);
 
 
@@ -174,20 +180,20 @@ int main(void)
             printf("Enter the Binary Number for converting it into Octal : ");
             scanf("%s", &binary_number);
             //first converting the given binary number to decimal
-            answer_in_decimal = any_to_decimal(binary_number, BINARY_BASE, 1);
-            printf("First converted the Binary Number : %s To Decimal Number %d\n", binary_number, answer_in_decimal);
+            answer_in_decimal = any_to_decimal(binary_number, BINARY_BASE, binary_to_what);
+            printf("First converted the Binary Number : %s To Decimal Number : %d\n", binary_number, answer_in_decimal);
             //then converting that decimal number to octal
             answer = decimal_to_any(answer_in_decimal, OCTAL_BASE);
             printf("Then converted the Decimal Number : %d To Octal Number : ", answer_in_decimal);
-            print_array_elements(answer, HOW_MUCH_BITS, binary_to_what);
+            print_array_elements(answer, HOW_MUCH_BITS, 1);
             break;
 
         case 2:
             printf("Enter the Binary Number for converting it into Hexadecimal : ");
             scanf("%s", &binary_number);
             //first converting the given binary number to decimal
-            answer_in_decimal = any_to_decimal(binary_number, BINARY_BASE, 1);
-            printf("First converted the Binary Number : %s To Decimal Number %d\n", binary_number, answer_in_decimal);
+            answer_in_decimal = any_to_decimal(binary_number, BINARY_BASE, binary_to_what);
+            printf("First converted the Binary Number : %s To Decimal Number : %d\n", binary_number, answer_in_decimal);
             //then converting that decimal number to hexadecimal
             answer = decimal_to_any(answer_in_decimal, HEXADEC_BASE);
             printf("Then converted the Decimal Number : %d To Hexadecimal Number : ", answer_in_decimal);
@@ -200,6 +206,86 @@ int main(void)
         }
 
         break; //break for case 'C' or case 'c'
+
+    //case 'D' or 'd' => Octal to Binary/Hexadecimal
+    case 'D':
+    case 'd':
+        printf("Enter 1 For Octal to Binary\n");
+        printf("Enter 2 For Octal to Hexadecimal\n");
+        scanf("%d", &octal_to_what);
+
+        switch (octal_to_what)
+        {
+        case 1:
+            printf("Enter the Octal Number for converting it into Binary : ");
+            scanf("%s", &octal_number);
+            //first converting the given octal number to decimal
+            answer_in_decimal = any_to_decimal(octal_number, OCTAL_BASE, 2);
+            printf("First converted the Octal Number : %s To Decimal Number : %d\n", octal_number, answer_in_decimal);
+            //then converting that decimal number to binary
+            answer = decimal_to_any(answer_in_decimal, BINARY_BASE);
+            printf("Then converted the Decimal Number : %d To Binary Number : ", answer_in_decimal);
+            print_array_elements(answer, HOW_MUCH_BITS, 1);
+            break;
+
+        case 2:
+            printf("Enter the Octal Number for converting it into Hexadecimal : ");
+            scanf("%s", &octal_number);
+            //first converting the given octal number to decimal
+            answer_in_decimal = any_to_decimal(octal_number, OCTAL_BASE, 2);
+            printf("First converted the Octal Number : %s To Decimal Number : %d\n", octal_number, answer_in_decimal);
+            //then converting that decimal number to hexadecimal
+            answer = decimal_to_any(answer_in_decimal, HEXADEC_BASE);
+            printf("Then converted the Decimal Number : %d To Hexadecimal Number : ", answer_in_decimal);
+            print_array_elements(answer, HOW_MUCH_BITS, 3);
+            break;
+
+        default: //'default' for case(octal_to_what)
+            printf("Invalid Option Entered For Conversion Of Octal to Binary/Hexadecimal !!! Please try again !!!\n");
+            break;
+        }
+
+        break; //break for case 'D' or case 'd'
+
+    //case 'E' or 'e' => Hexadecimal to Binary/Octal
+    case 'E':
+    case 'e':
+        printf("Enter 1 For Hexadecimal to Binary\n");
+        printf("Enter 2 For Hexadecimal to Octal\n");
+        scanf("%d", &hexadecimal_to_what);
+
+        switch (hexadecimal_to_what)
+        {
+        case 1:
+            printf("Enter the Hexadecimal Number for converting it into Binary : ");
+            scanf("%s", &hexadecimal_number);
+            //first converting the given hexadecimal number to decimal
+            answer_in_decimal = any_to_decimal(hexadecimal_number, HEXADEC_BASE, 3);
+            printf("First converted the Hexadecimal Number : %s To Decimal Number : %d\n", hexadecimal_number, answer_in_decimal);
+            //then converting that decimal number to binary
+            answer = decimal_to_any(answer_in_decimal, BINARY_BASE);
+            printf("Then converted the Decimal Number : %d To Binary Number : ", answer_in_decimal);
+            print_array_elements(answer, HOW_MUCH_BITS, 1);
+            break;
+
+        case 2:
+            printf("Enter the Hexadecimal Number for converting it into Octal : ");
+            scanf("%s", &hexadecimal_number);
+            //first converting the given hexadecimal number to decimal
+            answer_in_decimal = any_to_decimal(hexadecimal_number, HEXADEC_BASE, 3);
+            printf("First converted the Hexadecimal Number : %s To Decimal Number : %d\n", hexadecimal_number, answer_in_decimal);
+            //then converting that decimal number to octal
+            answer = decimal_to_any(answer_in_decimal, OCTAL_BASE);
+            printf("Then converted the Decimal Number : %d To Octal Number : ", answer_in_decimal);
+            print_array_elements(answer, HOW_MUCH_BITS, 2);
+            break;
+
+        default: //'default' for case(hexadecimal_to_what)
+            printf("Invalid Option Entered For Conversion Of Hexadecimal to Binary/Octal !!! Please try again !!!\n");
+            break;
+        }
+
+        break; //break for case 'D' or case 'd'
 
     default:
         printf("Invalid Option Entered For Conversion Type !!! Please try again !!!\n");
@@ -256,6 +342,8 @@ int any_to_decimal(char* in_var_num, int in_base_digits, int what_to_dec)
                 decimal_num_to_return = decimal_num_to_return + (((int)in_var_num[bit] - DIGIT_0) * power(in_base_digits, index));
                 index++;
             }
+            else
+                continue;
         }
         //else if block for converting hexadecimal number to decimal number
         else if (what_to_dec == 3)
