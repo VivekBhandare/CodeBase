@@ -32,7 +32,7 @@
 #define HEXADEC_BASE 16
 #define DECIMAL_BASE 10
 
-//this defines whether the number should be of 8 or 16 or 32 bits
+//this defines whether the number should be upto 8 or 16 or 32 bits
 #define HOW_MUCH_BITS 32
 
 //'A' to 'F' ASCII values => 65 to 70
@@ -44,12 +44,13 @@
 #define DIGIT_9 57
 
 
+// entry-point function
 int main(void)
 {
     //function declarations
     int* decimal_to_any(int, int);
     int any_to_decimal(char*, int, int);
-    int print_array_elements(int*, int, int);
+    void print_array_elements(int*, int, int);
     int power(int, int);
     
 
@@ -84,10 +85,11 @@ int main(void)
         printf("Enter 'B' or 'b' For Binary/Octal/Hexadecimal to Decimal\n");
         printf("Enter 'C' or 'c' For Binary to Octal/Hexadecimal\n");
         printf("Enter 'D' or 'd' For Octal to Binary/Hexadecimal\n");
-        printf("Enter 'E' or 'e' For Hexadecimal to Binary/Octal\n");
+        printf("Enter 'E' or 'e' For Hexadecimal to Binary/Octal\n\n");
         //scanf("%c", &conversion_type);
         conversion_type = getch();
 
+        printf("\n");
         //main switch-case for what type of conversion we want to do
         switch (conversion_type)
         {
@@ -306,13 +308,13 @@ int main(void)
         //scanf("%c", &option);
         if (option == 'Q' || option == 'q')
         {
-            //printf("\nPressed \'%c\'... So exiting...\n\n", option);
+            printf("\nPressed \'%c\'... So exiting...\n", option);
             break;
         }
         else
         {
-            printf("Pressed %c ... So continuing ...", option);
-            //continue;
+            printf("\nPressed %c ... So continuing ...\n", option);
+            continue;
         }
 
     } //ending curly brace of user controlled infinite while loop
@@ -395,7 +397,7 @@ int any_to_decimal(char* in_var_num, int in_base_digits, int what_to_dec)
 }
 
 
-int print_array_elements(int* array_name, int array_size, int what_to_print)
+void print_array_elements(int* array_name, int array_size, int what_to_print)
 {
     //variable declarations
     char print_leading_zero = 'N';
@@ -453,7 +455,6 @@ int print_array_elements(int* array_name, int array_size, int what_to_print)
         array_name[i] = 0;
     }
 
-    return(0);
 }
 
 
