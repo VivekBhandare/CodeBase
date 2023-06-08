@@ -51,6 +51,7 @@ int main(void)
     int any_to_decimal(char*, int, int);
     int print_array_elements(int*, int, int);
     int power(int, int);
+    
 
     //variable declarations
     char conversion_type;
@@ -84,7 +85,8 @@ int main(void)
         printf("Enter 'C' or 'c' For Binary to Octal/Hexadecimal\n");
         printf("Enter 'D' or 'd' For Octal to Binary/Hexadecimal\n");
         printf("Enter 'E' or 'e' For Hexadecimal to Binary/Octal\n");
-        scanf("%c", &conversion_type);
+        //scanf("%c", &conversion_type);
+        conversion_type = getch();
 
         //main switch-case for what type of conversion we want to do
         switch (conversion_type)
@@ -101,7 +103,6 @@ int main(void)
             {
 
             case 1:
-                answer = NULL;
                 printf("Enter the Decimal Number for converting it into Binary : ");
                 scanf("%d", &decimal_number);
                 answer = decimal_to_any(decimal_number, BINARY_BASE);
@@ -109,7 +110,6 @@ int main(void)
                 break;
 
             case 2:
-                answer = NULL;
                 printf("Enter the Decimal Number for converting it into Octal : ");
                 scanf("%d", &decimal_number);
                 answer = decimal_to_any(decimal_number, OCTAL_BASE);
@@ -117,7 +117,6 @@ int main(void)
                 break;
 
             case 3:
-                answer = NULL;
                 printf("Enter the Decimal Number for converting it into Hexadecimal : ");
                 scanf("%d", &decimal_number);
                 answer = decimal_to_any(decimal_number, HEXADEC_BASE);
@@ -300,19 +299,22 @@ int main(void)
 
         } //ending curly brace of switch(conversion_type)
 
+
         // break condition for user controlled infinite while loop
         printf("\nPress 'Q' or 'q' anytime to exit. Press any other key to continue ...\n");
         option = getch();
+        //scanf("%c", &option);
         if (option == 'Q' || option == 'q')
         {
-            printf("\nPressed \'%c\'... So exiting...\n\n", option);
+            //printf("\nPressed \'%c\'... So exiting...\n\n", option);
             break;
         }
         else
         {
-            printf("\nPressed \'%c\'... So continuing...\n\n", option);
-            continue;
+            printf("Pressed %c ... So continuing ...", option);
+            //continue;
         }
+
     } //ending curly brace of user controlled infinite while loop
 
     return(0);
@@ -444,6 +446,12 @@ int print_array_elements(int* array_name, int array_size, int what_to_print)
         }
     }
     printf("\n");
+
+    //clear the array
+    for (int i = 0; i < array_size; i++)
+    {
+        array_name[i] = 0;
+    }
 
     return(0);
 }
