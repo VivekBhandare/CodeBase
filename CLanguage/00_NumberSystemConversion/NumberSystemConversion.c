@@ -392,6 +392,13 @@ int any_to_decimal(char* in_var_num, int in_base_digits, int what_to_dec)
 
     } //ending curly brace of for loop hexadecimal number to decimal number
 
+    //clear the array
+    for (int i = 0; i < HOW_MUCH_BITS; i++)
+    {
+        in_var_num[i] = 0;
+    }
+
+
     //return the converted decimal number
     return(decimal_num_to_return);
 }
