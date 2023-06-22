@@ -51,7 +51,7 @@ int main(void)
     int* decimal_to_any(int, int);
     int any_to_decimal(char*, int, int);
     void print_array_elements(int*, int, int);
-    int power(int, int);
+    //int power(int, int);
     
 
     //variable declarations
@@ -353,6 +353,9 @@ int* decimal_to_any(int in_dec_num, int in_base_digits)
 //below function converts either binary or octal or hexadecimal number to decimal number
 int any_to_decimal(char* in_var_num, int in_base_digits, int what_to_dec)
 {
+    //function declarations
+    int power(int, int);
+
     //variable declarations
     int decimal_num_to_return = 0;
     int index = 0;
