@@ -50,3 +50,5 @@ Thumbs.db
 
 # For .obj file
 *.obj
+*.out
+*.app
