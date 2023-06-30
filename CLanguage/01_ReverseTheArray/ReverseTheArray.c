@@ -4,18 +4,19 @@
 
 int main(void)
 {
-	//function declarations
+	// Function declarations
 	int print_array_elements(int*, int);
 
-	//variable declarations
-	int* ptr;
+	// Variable declarations
+	int* ptr = NULL;
 	int size;
 	int temp;
 
-	//code
+	// Code
 	printf("Enter size of elements : ");
 	scanf("%d", &size);
 	
+	// Dynamic or Run time memory allocation
 	ptr = (int*)malloc(size * sizeof(int));
 
 
@@ -26,9 +27,9 @@ int main(void)
 
 	else
 	{
-		printf("Memory successfully allocated using malloc.\n\n");
+		printf("Memory successfully allocated using malloc().\n\n");
 
-		//insert the elements in an array
+		// Insert the elements in an array
 		for (int idx = 0; idx < size; idx++)
 		{
 			//ptr[idx] = idx + 1;
@@ -38,14 +39,14 @@ int main(void)
 
 		printf("\n");
 
-		//display the elements of an array
+		// Display the elements of an array
 		printf("Entered elements of the array are: ");
 		print_array_elements(ptr, size);
 
 
 		printf("\n\n");		
 
-		//reversing the array
+		// Reversing the array
 		for (int idx = 0; idx < size / 2; idx++)
 		{
 			temp = ptr[idx];
@@ -61,13 +62,21 @@ int main(void)
 
 	}
 
+	// Freeing the memory, also wiping of the Base Address from ptr.
+	if (ptr)
+	{
+		free(ptr);
+		printf("Work done. Freed the memory allocated by malloc().");
+		ptr = NULL;
+	}
+
 	return(0);
 }
 
 
 int print_array_elements(int* array_name, int array_size)
 {
-	//code
+	// Code
 	for (int idx = 0; idx < array_size; idx++)
 	{
 		printf("%d ", array_name[idx]);
